@@ -29,7 +29,7 @@ class GraphVisualization:
 		G = nx.Graph()
 		G.add_weighted_edges_from(self.visual)
 		edge_labels = nx.get_edge_attributes(G, "weight")
-		pos = nx.spiral_layout(G)
+		pos = nx.spring_layout(G, seed=7)
 
 		# Draw the nodes
 		nx.draw_networkx_nodes(G, pos, node_size=250)
