@@ -17,15 +17,14 @@ class GraphVisualization:
 	# addEdge function inputs the vertices of an 
 	# edge and appends it to the visual list 
 	def addEdge(self, a, b, w): 
-		temp = [a, b, w]
-		self.visual.append(temp) 
+		self.visual.append([a, b, w])
 		
 	# In visualize function G is an object of 
 	# class Graph given by networkx G.add_edges_from(visual) 
 	# creates a graph with a given list 
 	# nx.draw_networkx(G) - plots the graph 
 	# plt.show() - displays the graph 
-	def visualize(self): 
+	def visualize(self):
 		G = nx.Graph()
 		G.add_weighted_edges_from(self.visual)
 		edge_labels = nx.get_edge_attributes(G, "weight")
@@ -39,9 +38,13 @@ class GraphVisualization:
 
 		# Draw the labels
 		# node labels
-		nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif")
+		nx.draw_networkx_labels(G, pos, font_size=6, font_family="sans-serif")
+
 		# edge weight labels
 		edge_labels = nx.get_edge_attributes(G, "weight")
+		colors = []
+		for key in edge_labels:
+			colors.append(edge_labels[key])
 		nx.draw_networkx_edge_labels(G, pos, edge_labels)
 
 		# Show
