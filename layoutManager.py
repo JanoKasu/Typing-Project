@@ -5,7 +5,7 @@ from halo import Halo
 from collections import defaultdict
 from GraphVisualization import GraphVisualization
 
-def getGraph():
+def getGraph(PDFs):
     graph = defaultdict(list)
 
     ##################################################
@@ -19,26 +19,24 @@ def getGraph():
 
     ##################################################
     # Main function
-
-    PDFs = ['The Grammar of English Grammars.pdf', 'Chubby--Charming.pdf', 'Harry Potter and the Cursed Child.pdf', 'The Book Thief.pdf', 'The Hitchhikers Guide to the Galaxy.pdf', 'The Last Crusade.pdf']
-    test = ['meetingminutes.pdf']
-
-    # Change test to PDFs for production
+    
+    # Spinning Loader
+    # 
     with Halo(text='Loading', spinner='dots'):
-        for i in range(len(test)):
-            print('\nReading: ' + test[i])
-            pdf = open('PDFs/' + test[i], 'rb')
-            Reader.readPDForTxt(pdf)
+        for i in range(len(PDFs)):
+            print('\nReading: ' + PDFs[i])
+            path = ('PDFs/' + PDFs[i])
+            Reader.readPDF(path)
 
 
     ##################################################
-    # Use the data as a graph, where the digrams are edges
+    # Use the data as a graph, where the frequency of digrams are weights
 
     # Given a digram, parse the left (start) and right (end) elements
-    # Weight is the digram's value
+    # Weight is the digram's frequency
 
-    with open('data.json') as f:
-        data = json.load(f)
+    with open('data.json') as file:
+        data = json.load(file)
         digram = data['digram']
         for di in digram:
             start = di[0]
@@ -48,12 +46,11 @@ def getGraph():
                 addEdge(start, end, weight, graph)
 
     with open("graph.json", "w") as outfile:
-        json.dump(graph, outfile, indent=4, sort_keys=True )
+        json.dump(graph, outfile, indent=4, sort_keys=True)
 
     with open("graph.json", "r") as f:
         G = GraphVisualization()
         data = json.load(f)
-        print(data)
         # start is the element in the dictionary that points to a list of other elements
         for start in data:
             # end is the list of elements that start points to

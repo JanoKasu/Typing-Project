@@ -1,10 +1,8 @@
 import json
 import PyPDF2
 import re
-import statistics
 import numpy as np
-from collections import OrderedDict, defaultdict
-from typing import Dict
+from collections import defaultdict
 
 ##################################################
 
@@ -18,13 +16,13 @@ def sort(grams):
 
 ##################################################
 
-def readPDForTxt(pdf):
-    # Get the number of times a monogram, digram, or trigram appears
+def readPDF(path):
+    # Get the number of times a monogram or digram appears
     monogram = defaultdict()
     digram = defaultdict()
 
     # This loop is for the pages
-    pdfReader = PyPDF2.PdfReader(pdf)
+    pdfReader = PyPDF2.PdfReader(path)
 
     for i in range(1, len(pdfReader.pages)):
         page = pdfReader.pages[i]
