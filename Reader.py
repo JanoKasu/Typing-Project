@@ -17,10 +17,20 @@ def sort(grams):
 ##################################################
 
 def readPDF(path):
-    # Get the number of times a monogram or digram appears
-    monogram = defaultdict()
-    digram = defaultdict()
+    # Get the existing data from the JSON file
+    with open("data.json") as f:
+        file = json.loads(f.read())
+        if file.__contains__("monogram"):
+            monogram = file["monogram"]
+        else:
+            monogram = defaultdict()
 
+        if file.__contains__("digram"):
+            digram = file["digram"]
+        else:
+            digram = defaultdict()
+
+    # Get the number of times a monogram or digram appears
     # This loop is for the pages
     pdfReader = PyPDF2.PdfReader(path)
 
@@ -28,7 +38,7 @@ def readPDF(path):
         page = pdfReader.pages[i]
         words = page.extract_text().lower()
         # Remove non-ASCII characters from the text
-        words = re.sub(r'[^\x61-\x7B,./;]', '', words).split()
+        words = re.sub(r'[^\x61-\x7A,./;]', '', words).split()
         
         # This loop is for the words
         for j in range(len(words)):
