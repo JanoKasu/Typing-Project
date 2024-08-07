@@ -34,7 +34,7 @@ def readPDF(path):
     # This loop is for the pages
     pdfReader = PyPDF2.PdfReader(path)
 
-    for i in range(1, len(pdfReader.pages)):
+    for i in range(len(pdfReader.pages)):
         page = pdfReader.pages[i]
         words = page.extract_text().lower()
         # Remove non-ASCII characters from the text

@@ -5,13 +5,13 @@ import json
 # import Alg
 
 PDFs = ['The Grammar of English Grammars.pdf', 'Chubby--Charming.pdf', 'Harry Potter and the Cursed Child.pdf', 'The Book Thief.pdf', 'The Hitchhikers Guide to the Galaxy.pdf', 'The Last Crusade.pdf']
-
+test = ['Chubby--Charming.pdf']
 ##################################################
 # Clear the JSON file
 with open("data.json", "w") as f:
 	json.dump("{}", f)
 
-layoutManager.getGraph(PDFs)
+layoutManager.getGraph(test)
 
 ##################################################
 # Visualize Graph
