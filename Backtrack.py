@@ -17,38 +17,40 @@ def get_value(matrix, row, col):
 	key = matrix[row][col]
 	if key == 0:
 		return 0
-	sum = 0
-	for i in range(len(matrix)):
-		for j in range(len(matrix[i])):
-			di = str(matrix[i][j]) + key
-			rev = key + str(matrix[i][j])
-			if digrams.__contains__(di):
-				sum += ((abs(i-row) + abs(j-col)) * digrams[di])
-			elif digrams.__contains__(rev):
-				sum += ((abs(i-row) + abs(j-col)) * digrams[rev])
-			else:
-				sum += monograms[key]
-	return sum
+	if row + col == 0:
+		return monograms[key]
+	di = str(matrix[row][col-1]) + key
+	rev = key + str(matrix[row][col-1])
+	if di in digrams:
+		return monograms[key] / digrams[di]
+	elif rev in digrams:
+		return monograms[key] / digrams[rev]
+	return monograms[key]
 
 def Backtrack(matrix, pos):
-	if pos == 30:
+	if pos >= 30:
 		return matrix
+	
 	i = pos // 10
 	j = pos % 10
 	file = json.loads(open('data.json', 'r').read())["monogram"]
+	new_matrix = copy.deepcopy(matrix)
+	
 	for key in file:
-		# Remove duplicates
-		if get_used(matrix).__contains__(key):
-			continue
-		# Maximize clusters
-		new_matrix = copy.deepcopy(matrix)
 		new_matrix[i][j] = key
 		value = get_value(new_matrix, i, j)
 		prev_value = get_value(matrix, i, j)
-		print(new_matrix)
-		if value <= prev_value:
+		
+		# Remove duplicates
+		if key in get_used(matrix):
 			continue
-		return Backtrack(new_matrix, pos+1)
+		# Maximize clusters
+		elif value <= prev_value:
+			continue
+		# Backtrack for the next position
+		else:
+			print(new_matrix, "\n", pos)
+			Backtrack(new_matrix, pos+1)
 	matrix[i][j] = 0
 
 
