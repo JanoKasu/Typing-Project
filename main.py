@@ -4,7 +4,7 @@ from GraphVisualization import GraphVisualization
 import json
 # import Alg
 
-PDFs = ['The Grammar of English Grammars.pdf', 'Chubby--Charming.pdf', 'Harry Potter and the Cursed Child.pdf', 'The Book Thief.pdf', 'The Hitchhikers Guide to the Galaxy.pdf', 'The Last Crusade.pdf']
+PDFs = ['The Grammar of English Grammars.pdf', 'Chubby--Charming.pdf', 'Harry Potter and the Cursed Child.pdf', 'The Book Thief.pdf', 'The Hitchhikers Guide to the Galaxy.pdf', 'The Last Crusade.pdf', 'A Thousand Plateaus.pdf', 'The Hunger Games.pdf', 'The Kite Runner.pdf']
 
 ##################################################
 # Clear the JSON file
