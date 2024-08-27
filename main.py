@@ -1,17 +1,19 @@
-import layoutManager
-from collections import defaultdict
+import os
+import LayoutManager
 from GraphVisualization import GraphVisualization
 import json
-# import Alg
 
-PDFs = ['The Grammar of English Grammars.pdf', 'Chubby--Charming.pdf', 'Harry Potter and the Cursed Child.pdf', 'The Book Thief.pdf', 'The Hitchhikers Guide to the Galaxy.pdf', 'The Last Crusade.pdf', 'A Thousand Plateaus.pdf', 'The Hunger Games.pdf', 'The Kite Runner.pdf']
+PDFs = os.listdir('./PDFs/')
+for file in PDFs:
+	if not file.endswith('.pdf'):
+		PDFs.remove(file)
 
 ##################################################
 # Clear the JSON file
 with open("data.json", "w") as f:
 	json.dump("{}", f)
 
-layoutManager.getGraph(PDFs)
+LayoutManager.getGraph(PDFs)
 
 ##################################################
 # Visualize Graph

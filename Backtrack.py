@@ -1,9 +1,8 @@
-import math
 import copy
 import json
 from halo import Halo
 
-def get_used(matrix):
+def getUsed(matrix):
 	used = []
 	for i in range(len(matrix)):
 		for j in range(len(matrix[i])):
@@ -11,7 +10,7 @@ def get_used(matrix):
 				used.append(matrix[i][j])
 	return used
 
-def get_value(matrix, row, col):
+def getValue(matrix, row, col):
 	monograms = json.loads(open('data.json', 'r').read())["monogram"]
 	digrams = json.loads(open('data.json', 'r').read())["digram"]
 	key = matrix[row][col]
@@ -27,7 +26,7 @@ def get_value(matrix, row, col):
 		return monograms[key] / digrams[rev]
 	return monograms[key]
 
-def Backtrack(matrix, pos):
+def backtrack(matrix, pos):
 	if pos >= 30:
 		return matrix
 	
@@ -38,11 +37,11 @@ def Backtrack(matrix, pos):
 	
 	for key in file:
 		new_matrix[i][j] = key
-		value = get_value(new_matrix, i, j)
-		prev_value = get_value(matrix, i, j)
+		value = getValue(new_matrix, i, j)
+		prev_value = getValue(matrix, i, j)
 		
 		# Remove duplicates
-		if key in get_used(matrix):
+		if key in getUsed(matrix):
 			continue
 		# Maximize clusters
 		elif value <= prev_value:
@@ -50,7 +49,7 @@ def Backtrack(matrix, pos):
 		# Backtrack for the next position
 		else:
 			print(new_matrix, "\n", pos)
-			Backtrack(new_matrix, pos+1)
+			backtrack(new_matrix, pos+1)
 	matrix[i][j] = 0
 
 
