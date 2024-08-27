@@ -9,9 +9,7 @@ for file in PDFs:
 		PDFs.remove(file)
 
 ##################################################
-# Clear the JSON file
-with open("data.json", "w") as f:
-	json.dump("{}", f)
+# Get the data from the PDFs
 
 LayoutManager.getGraph(PDFs)
 

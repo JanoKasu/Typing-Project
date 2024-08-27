@@ -14,6 +14,10 @@ def addEdge(start, end, weight, graph):
 ##################################################
 # Main function
 def getGraph(PDFs):
+    with open("data.json", "w") as f:
+        json.dump("{}", f)
+         
+    
     graph = defaultdict(list)
     # Spinning Loader
     with Halo(text='Loading', spinner='dots'):
