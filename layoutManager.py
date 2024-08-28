@@ -5,7 +5,7 @@ from collections import defaultdict
 
 ##################################################
 # function for adding edge to graph 
-def addEdge(start, end, weight, graph):
+def add_edge(start, end, weight, graph):
     if (graph[start] != None):
         graph[start].append([end, weight])
     else:
@@ -13,7 +13,7 @@ def addEdge(start, end, weight, graph):
 
 ##################################################
 # Main function
-def getGraph(PDFs):
+def get_graph(PDFs):
     with open("data.json", "w") as f:
         json.dump("{}", f)
          
@@ -25,7 +25,7 @@ def getGraph(PDFs):
         for i in range(len(PDFs)):
             print('\nReading: ' + PDFs[i])
             path = ('PDFs/' + PDFs[i])
-            Reader.readPDF(path)
+            Reader.read_pdf(path)
 
     ##################################################
     # Use the data as a graph, where the frequency of digrams are weights
@@ -41,7 +41,7 @@ def getGraph(PDFs):
             end = di[1]
             weight = digram[di]
             if (start != end):
-                addEdge(start, end, weight, graph)
+                add_edge(start, end, weight, graph)
 
     with open("graph.json", "w") as f:
 	    json.dump(graph, f, indent=4, sort_keys=True)

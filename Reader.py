@@ -16,7 +16,7 @@ def sort(grams):
 
 ##################################################
 
-def readPDF(path):
+def read_pdf(path):
     try:
         # Get the existing data from the JSON file
         with open("data.json") as f:

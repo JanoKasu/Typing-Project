@@ -8,7 +8,7 @@ class GraphVisualization:
 		self.visual = [] 
 		
 	# addEdge function inputs the vertices of an edge and appends it to the visual list 
-	def addEdge(self, a, b, w): 
+	def add_edge(self, a, b, w): 
 		self.visual.append([a, b, w])
 		
 	# In visualize function G is an object of class Graph given by networkx G.add_edges_from(visual) creates a graph with a given list 

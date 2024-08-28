@@ -2,7 +2,7 @@ import copy
 import json
 from halo import Halo
 
-def getUsed(matrix):
+def get_used(matrix):
 	used = []
 	for i in range(len(matrix)):
 		for j in range(len(matrix[i])):
@@ -10,7 +10,7 @@ def getUsed(matrix):
 				used.append(matrix[i][j])
 	return used
 
-def getValue(matrix, row, col):
+def get_value(matrix, row, col):
 	monograms = json.loads(open('data.json', 'r').read())["monogram"]
 	digrams = json.loads(open('data.json', 'r').read())["digram"]
 	key = matrix[row][col]
@@ -24,7 +24,8 @@ def getValue(matrix, row, col):
 		return monograms[key] / digrams[di]
 	elif rev in digrams:
 		return monograms[key] / digrams[rev]
-	return monograms[key]
+	else:
+		return monograms[key]
 
 def backtrack(matrix, pos):
 	if pos >= 30:
@@ -48,7 +49,7 @@ def backtrack(matrix, pos):
 			continue
 		# Backtrack for the next position
 		else:
-			print(new_matrix, "\n", pos)
+			print(new_matrix)
 			backtrack(new_matrix, pos+1)
 	matrix[i][j] = 0
 
@@ -56,4 +57,4 @@ def backtrack(matrix, pos):
 w, h = 10, 3
 zeroes = [[0 for x in range(w)] for y in range(h)]
 with Halo(text='Loading', spinner='dots'):
-	print(Backtrack(zeroes, 0))
+	print(backtrack(zeroes, 0))

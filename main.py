@@ -11,7 +11,7 @@ for file in PDFs:
 ##################################################
 # Get the data from the PDFs
 
-LayoutManager.getGraph(PDFs)
+LayoutManager.get_graph(PDFs)
 
 ##################################################
 # Visualize Graph
@@ -24,7 +24,8 @@ with open("graph.json") as f:
 		# end is the list of elements that start points to
 		for end in data.get(start):
 			# end[0] is  the letter, end[1] is the weight
-			G.addEdge(start, end[0], end[1])
+			G.add_edge(start, end[0], end[1])
 	
 	G.visualize()
-# Alg.minimize()
+
+##################################################
