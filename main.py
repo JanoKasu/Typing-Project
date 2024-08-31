@@ -5,15 +5,15 @@ import json
 from matplotlib import pyplot as plt
 from GraphVisualization import GraphVisualization
 
-PDFs = os.listdir('./PDFs/')
-for file in PDFs:
-	if not file.endswith('.pdf'):
-		PDFs.remove(file)
+files = os.listdir('./files/')
 
 ##################################################
 # Get the data from the PDFs
 
-LayoutManager.get_data(PDFs)
+with open("data.json", "w") as f:
+	json.dump("{}", f)
+
+LayoutManager.get_data(files)
 
 # Get statistics
 

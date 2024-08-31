@@ -13,7 +13,7 @@ def add_edge(start, end, weight, graph):
 
 ##################################################
 # Main function
-def get_data(PDFs):
+def get_data(files):
     with open("data.json", "w") as f:
         json.dump("{}", f)
          
@@ -22,10 +22,15 @@ def get_data(PDFs):
     # Spinning Loader
     with Halo(text='Loading', spinner='dots'):
         # Read each PDF
-        for i in range(len(PDFs)):
-            print('\nReading: ', PDFs[i])
-            path = ('PDFs/' + PDFs[i])
-            Reader.read_pdf(path)
+        for i in range(len(files)):
+            print('\nReading: ', files[i])
+            path = ('files/' + files[i])
+            if files[i].endswith('.pdf'):
+                Reader.read_pdf(path)
+            elif files[i].endswith('.txt'):
+                Reader.read_txt(path)
+            else:
+                continue
 
     ##################################################
     # Use the data as a graph, where the frequency of digrams are weights

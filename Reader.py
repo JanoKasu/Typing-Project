@@ -21,12 +21,12 @@ def read_pdf(path):
         # Get the existing data from the JSON file
         with open("data.json") as f:
             file = json.loads(f.read())
-            if file.__contains__("monogram"):
+            if "monogram" in file:
                 monogram = file["monogram"]
             else:
                 monogram = defaultdict()
 
-            if file.__contains__("digram"):
+            if "digram" in file:
                 digram = file["digram"]
             else:
                 digram = defaultdict()
@@ -35,37 +35,35 @@ def read_pdf(path):
         # This loop is for the pages
         pdfReader = PyPDF2.PdfReader(path)
 
-        for i in range(len(pdfReader.pages)):
-            page = pdfReader.pages[i]
+        for page in pdfReader.pages:
             words = page.extract_text().lower()
             # Remove non-ASCII characters from the text
             words = re.sub(r'[^\x61-\x7A,./;]', '', words).split()
             
             # This loop is for the words
-            for j in range(len(words)):
+            for word in words:
                 # This loop is for sets of 1 letter (monograms)
-                for k in range(len(words[j])):
-                    di = words[j][k]
-                    if monogram.__contains__(di):
-                        monogram[di] = monogram.get(di) + 1
+                for k in range(len(word)):
+                    gram = word[k]
+                    if gram in monogram:
+                        monogram[gram] = monogram.get(gram) + 1
                     else:
-                        monogram[di] = 1
+                        monogram[gram] = 1
                 
                 # This loop is for sets of 2 letters (digrams)
-                for k in range(len(words[j])-1):
-                    di = words[j][k] + words[j][k+1]
-                    rev = words[j][k+1] + words[j][k]
-                    if digram.__contains__(rev):
-                        digram[rev] = digram.get(rev) + 1
-                    elif digram.__contains__(di):
+                for char in range(len(word) - 1):
+                    di = word[char] + word[char+1]
+                    reverse = word[char+1] + word[char]
+                    if reverse in digram:
+                        digram[reverse] = digram.get(reverse) + 1
+                    elif di in digram:
                         digram[di] = digram.get(di) + 1
                     else:
                         digram[di] = 1
     except Exception:
-        print(Exception.__cause__)
+        print(Exception)
 
     ##################################################
-
     # Sort the dictionaries by value (small -> large)
 
     monogram = sort(monogram)
@@ -75,4 +73,52 @@ def read_pdf(path):
     with open("data.json", "w") as outfile:
         grams = { 'monogram' : monogram, 'digram' : digram }
         json.dump(grams, outfile, indent=4 )
-        
+
+##################################################
+
+def read_txt(path):
+    # Get the existing data from the JSON file
+    with open("data.json") as f:
+        file = json.loads(f.read())
+        if file.__contains__("monogram"):
+            monogram = file["monogram"]
+        else:
+            monogram = defaultdict()
+
+        if file.__contains__("digram"):
+            digram = file["digram"]
+        else:
+            digram = defaultdict()
+
+        with open(path) as file:
+            for line in file:
+                words = re.sub(r'[^\x61-\x7A,./;]', '', line.lower()).split()
+
+                for word in words:
+                    for char in word:
+                        if char in monogram:
+                            monogram[char] = monogram.get(char) + 1
+                        else:
+                            monogram[char] = 1
+
+                    for char in range(len(word) - 1):
+                        di = word[char] + word[char+1]
+                        reverse = word[char+1] + word[char]
+                        
+                        if reverse in digram:
+                            digram[reverse] = digram.get(reverse) + 1
+                        elif di in digram:
+                            digram[di] = digram.get(di) + 1
+                        else:
+                            digram[di] = 1
+
+    ##################################################
+    # Sort the dictionaries by value (small -> large)
+         
+    monogram = sort(monogram)
+    digram = sort(digram)
+
+    # Store the data in a json file
+    with open("data.json", "w") as outfile:
+        grams = { 'monogram' : monogram, 'digram' : digram }
+        json.dump(grams, outfile, indent=4 )
