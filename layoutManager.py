@@ -13,7 +13,7 @@ def add_edge(start, end, weight, graph):
 
 ##################################################
 # Main function
-def get_graph(PDFs):
+def get_data(PDFs):
     with open("data.json", "w") as f:
         json.dump("{}", f)
          
@@ -23,7 +23,7 @@ def get_graph(PDFs):
     with Halo(text='Loading', spinner='dots'):
         # Read each PDF
         for i in range(len(PDFs)):
-            print('\nReading: ' + PDFs[i])
+            print('\nReading: ', PDFs[i])
             path = ('PDFs/' + PDFs[i])
             Reader.read_pdf(path)
 

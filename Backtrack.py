@@ -38,23 +38,25 @@ def backtrack(matrix, pos):
 	
 	for key in file:
 		new_matrix[i][j] = key
-		value = getValue(new_matrix, i, j)
-		prev_value = getValue(matrix, i, j)
+		value = get_value(new_matrix, i, j)
+		prev_value = get_value(matrix, i, j)
 		
 		# Remove duplicates
-		if key in getUsed(matrix):
+		if key in get_used(matrix):
 			continue
 		# Maximize clusters
 		elif value <= prev_value:
 			continue
 		# Backtrack for the next position
 		else:
-			print(new_matrix)
+			bestMatrix = new_matrix
 			backtrack(new_matrix, pos+1)
 	matrix[i][j] = 0
 
 
 w, h = 10, 3
 zeroes = [[0 for x in range(w)] for y in range(h)]
+global bestMatrix
+bestMatrix = copy.deepcopy(zeroes)
 with Halo(text='Loading', spinner='dots'):
 	print(backtrack(zeroes, 0))

@@ -1,7 +1,9 @@
 import os
 import LayoutManager
-from GraphVisualization import GraphVisualization
+import numpy as np
 import json
+from matplotlib import pyplot as plt
+from GraphVisualization import GraphVisualization
 
 PDFs = os.listdir('./PDFs/')
 for file in PDFs:
@@ -11,7 +13,30 @@ for file in PDFs:
 ##################################################
 # Get the data from the PDFs
 
-LayoutManager.get_graph(PDFs)
+LayoutManager.get_data(PDFs)
+
+# Get statistics
+
+with open('data.json') as file:
+	digrams = json.loads(file.read())['digram']
+	keys = list(digrams.keys())
+	values = list(digrams.values())
+
+	mean = np.mean(values)
+	median = np.median(values)
+	standardDeviation = np.std(values)
+
+	print('Mean:\t\t\t', mean)
+	print('Median:\t\t\t', median)
+	print('Standard deviation:\t', standardDeviation)
+	
+	fig = plt.figure(figsize = (10, 5))
+
+	# creating the bar plot
+	plt.bar(keys, values)
+	plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+	plt.show()
+	plt.clf()
 
 ##################################################
 # Visualize Graph
