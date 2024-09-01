@@ -17,7 +17,6 @@ class GraphVisualization:
 	def visualize(self):
 		G = nx.Graph()
 		G.add_weighted_edges_from(self.visual)
-		edge_labels = nx.get_edge_attributes(G, "weight")
 		pos = nx.spring_layout(G, seed=7)
 
 		# Draw the nodes
@@ -31,15 +30,18 @@ class GraphVisualization:
 		nx.draw_networkx_labels(G, pos, font_size=6, font_family="sans-serif")
 
 		# edge weight labels
+		"""
 		edge_labels = nx.get_edge_attributes(G, "weight")
 		colors = []
 		for key in edge_labels:
 			colors.append(edge_labels[key])
 		nx.draw_networkx_edge_labels(G, pos, edge_labels)
-
+ 		"""
+		
 		# Show
 		ax = plt.gca()
 		ax.margins(0.08)
 		plt.axis("off")
 		plt.tight_layout()
+		plt.savefig('./images/SpringGraph.png')
 		plt.show()

@@ -14,6 +14,8 @@ cd Typing-Project
 git clone https://github.com/JanoKasu/Typing-Project.git
 ```
 
+Two graphs will pop up, both of which will be saved as png files in the `images` folder.
+
 ### Installing Dependencies
 Run `pip install -r Requirements.txt` to install the dependencies needed for this project.
 

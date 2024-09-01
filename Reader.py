@@ -15,6 +15,7 @@ def sort(grams):
     return grams
 
 ##################################################
+# Read PDF files
 
 def read_pdf(path):
     try:
@@ -75,6 +76,7 @@ def read_pdf(path):
         json.dump(grams, outfile, indent=4 )
 
 ##################################################
+# Read text files
 
 def read_txt(path):
     # Get the existing data from the JSON file
@@ -90,7 +92,7 @@ def read_txt(path):
         else:
             digram = defaultdict()
 
-        with open(path) as file:
+        with open(path, encoding='UTF-8') as file:
             for line in file:
                 words = re.sub(r'[^\x61-\x7A,./;]', '', line.lower()).split()
 

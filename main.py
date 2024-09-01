@@ -8,13 +8,14 @@ from GraphVisualization import GraphVisualization
 files = os.listdir('./files/')
 
 ##################################################
-# Get the data from the PDFs
+# Get the data from the files
 
 with open("data.json", "w") as f:
 	json.dump("{}", f)
 
 LayoutManager.get_data(files)
 
+##################################################
 # Get statistics
 
 with open('data.json') as file:
@@ -26,15 +27,16 @@ with open('data.json') as file:
 	median = np.median(values)
 	standardDeviation = np.std(values)
 
-	print('Mean:\t\t\t', mean)
+	print('\nMean:\t\t\t', mean)
 	print('Median:\t\t\t', median)
-	print('Standard deviation:\t', standardDeviation)
+	print('Standard deviation:\t', standardDeviation, '\n')
 	
 	fig = plt.figure(figsize = (10, 5))
 
 	# creating the bar plot
 	plt.bar(keys, values)
 	plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+	plt.savefig('./images/Histogram.png')
 	plt.show()
 	plt.clf()
 
