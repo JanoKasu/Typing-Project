@@ -6,12 +6,14 @@ from matplotlib import pyplot as plt
 from GraphVisualization import GraphVisualization
 
 files = os.listdir('./files/')
+if files == []:
+	raise Exception("'files' is empty.")
 
 ##################################################
 # Get the data from the files
 
 with open("data.json", "w") as f:
-	json.dump("{}", f)
+	json.dump({}, f)
 
 LayoutManager.get_data(files)
 
@@ -36,6 +38,8 @@ with open('data.json') as file:
 	# creating the bar plot
 	plt.bar(keys, values)
 	plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+	if not os.path.exists('./images'):
+		os.mkdir('./images')
 	plt.savefig('./images/Histogram.png')
 	plt.show()
 	plt.clf()
