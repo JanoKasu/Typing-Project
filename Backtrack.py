@@ -49,14 +49,12 @@ def backtrack(matrix, pos):
 			continue
 		# Backtrack for the next position
 		else:
-			bestMatrix = new_matrix
+			print(new_matrix)
 			backtrack(new_matrix, pos+1)
 	matrix[i][j] = 0
 
 
 w, h = 10, 3
 zeroes = [[0 for x in range(w)] for y in range(h)]
-global bestMatrix
-bestMatrix = copy.deepcopy(zeroes)
 with Halo(text='Loading', spinner='dots'):
 	print(backtrack(zeroes, 0))

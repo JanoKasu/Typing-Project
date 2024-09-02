@@ -14,21 +14,17 @@ cd Typing-Project
 git clone https://github.com/JanoKasu/Typing-Project.git
 ```
 
-Two graphs will pop up, both of which will be saved as png files in the `images` folder.
+To run the program, you must first add files to the `files` folder. You can find copyright-free material at [Project Gutenberg](https://www.gutenberg.org/). Alternatively, you can add text files of your code to see what the optimal layout for coding is! The program will return different layouts for different inputs, so try out a variety of genres.
+
+***Note that the files must be .pdf or .txt files to be read.***
+
+After adding files, run the program with `python Main.py`. Two graphs will pop up, both of which will be saved as png files in the `images` folder.
+
+The first is a histogram of the freqencies of bigrams (two letter combinations), and the second is a spring graph showing the relationship of the monograms with each other.
 
 ### Installing Dependencies
 Run `pip install -r Requirements.txt` to install the dependencies needed for this project.
 
-### Customization
-You can also add your own text or pdf documents to the appropriate folders under `./PDFs` or `./txts`.
-
----
-
-Finally, run the data collection algorithm with `python ./Main.py`
 
 ## Conclusion
 This project is still in development. As of writing, the algorithm to translate the data into a keyboard layout is incomplete.
-
-Note that the project will work with any PDFs or text files in the `files` folder. A good exercise might be to put python or C# code into a text file and see what is generated.
-
-The content in the `files` folder comes from [Project Gutenberg](https://www.gutenberg.org/); a copyright-free repository of e-books.
