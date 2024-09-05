@@ -5,12 +5,12 @@ import json
 from matplotlib import pyplot as plt
 from GraphVisualization import GraphVisualization
 
+##################################################
+# Get the data from the files
+
 files = os.listdir('./files/')
 if files == []:
 	raise Exception("'files' is empty.")
-
-##################################################
-# Get the data from the files
 
 with open("data.json", "w") as f:
 	json.dump({}, f)
