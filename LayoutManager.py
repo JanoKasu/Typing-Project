@@ -1,6 +1,6 @@
 import Reader
 import json
-from halo import Halo
+from alive_progress import alive_bar
 from collections import defaultdict
 
 ##################################################
@@ -20,10 +20,11 @@ def get_data(files):
     
     graph = defaultdict(list)
     # Spinning Loader
-    with Halo(text='Loading', spinner='dots'):
+    with alive_bar(len(files)) as bar:
         # Read each PDF
         for i in range(len(files)):
             print('\nReading: ', files[i])
+            bar()
             path = ('files/' + files[i])
             if files[i].endswith('.pdf'):
                 Reader.read_pdf(path)

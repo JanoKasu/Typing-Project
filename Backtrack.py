@@ -1,6 +1,7 @@
 import copy
 import json
-from halo import Halo
+import math
+from alive_progress import alive_bar
 
 def get_used(matrix):
 	used = []
@@ -34,6 +35,7 @@ def backtrack(bestMatrix, matrix, pos):
 	if pos >= 30:
 		if get_value(matrix) > get_value(bestMatrix):
 			bestMatrix = matrix
+		bar()
 		return bestMatrix
 	
 	i = pos // 10
@@ -53,6 +55,6 @@ def backtrack(bestMatrix, matrix, pos):
 w, h = 10, 3
 zeroes = [[0 for x in range(w)] for y in range(h)]
 bestMatrix = copy.deepcopy(zeroes)
-with Halo(text='Loading', spinner='dots'):
+with alive_bar(math.factorial(30)) as bar:
 	backtrack(bestMatrix, zeroes, 0)
 	print(bestMatrix)
