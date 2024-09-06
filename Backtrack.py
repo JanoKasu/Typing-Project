@@ -1,6 +1,7 @@
 import copy
 import json
 import math
+from threading import Thread
 from alive_progress import alive_bar
 
 def get_used(matrix):
@@ -55,6 +56,15 @@ def backtrack(bestMatrix, matrix, pos):
 w, h = 10, 3
 zeroes = [[0 for x in range(w)] for y in range(h)]
 bestMatrix = copy.deepcopy(zeroes)
+monograms = json.loads(open('data.json', 'r').read())["monogram"]
 with alive_bar(math.factorial(30)) as bar:
-	backtrack(bestMatrix, zeroes, 0)
+	threads = list()
+	for letter in monograms:
+		temp = copy.deepcopy(zeroes)
+		temp[0][0] = letter
+		thread = Thread(target=backtrack, args=(bestMatrix, temp, 1))
+		threads.append(thread)
+		thread.start()
+	for thread in threads:
+		thread.join()
 	print(bestMatrix)
