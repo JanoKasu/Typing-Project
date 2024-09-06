@@ -2,6 +2,7 @@ import copy
 import json
 import math
 from threading import Thread
+import time
 from alive_progress import alive_bar
 
 def get_used(matrix):
@@ -33,6 +34,8 @@ def get_value(matrix):
 			
 
 def backtrack(bestMatrix, matrix, pos):
+	if not thread.is_alive:
+		return
 	if pos >= 30:
 		if get_value(matrix) > get_value(bestMatrix):
 			bestMatrix = matrix
@@ -49,22 +52,31 @@ def backtrack(bestMatrix, matrix, pos):
 		# Remove duplicates
 		if key not in used:
 			new_matrix[i][j] = key
-			backtrack(bestMatrix, new_matrix, pos+1)
+			global stopThreads
+			if not stopThreads:
+				backtrack(bestMatrix, new_matrix, pos+1)
 	matrix[i][j] = 0
 
 
 w, h = 10, 3
+stopThreads = False
+condition = True
 zeroes = [[0 for x in range(w)] for y in range(h)]
 bestMatrix = copy.deepcopy(zeroes)
 monograms = json.loads(open('data.json', 'r').read())["monogram"]
-with alive_bar(math.factorial(30)) as bar:
-	threads = list()
-	for letter in monograms:
-		temp = copy.deepcopy(zeroes)
-		temp[0][0] = letter
-		thread = Thread(target=backtrack, args=(bestMatrix, temp, 1))
-		threads.append(thread)
-		thread.start()
-	for thread in threads:
-		thread.join()
-	print(bestMatrix)
+print()
+try:
+	with alive_bar(math.factorial(30)) as bar:
+		threads = list()
+		for letter in monograms:
+			temp = copy.deepcopy(zeroes)
+			temp[0][0] = letter
+			thread = Thread(target=backtrack, args=(bestMatrix, temp, 1), name=letter, daemon=True)
+			threads.append(thread)
+			thread.start()
+		for thread in threads:
+			while thread.is_alive():
+				time.sleep(0.1)
+	print('Best Matrix:\n', bestMatrix)
+except (KeyboardInterrupt, SystemExit):
+	print('\nProcess Terminated\n')
