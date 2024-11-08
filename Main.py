@@ -1,6 +1,5 @@
 import os
 import LayoutManager
-import numpy as np
 import json
 from matplotlib import pyplot as plt
 from GraphVisualization import GraphVisualization
@@ -25,14 +24,6 @@ with open('data.json') as file:
 	keys = list(digrams.keys())
 	values = list(digrams.values())
 
-	mean = np.mean(values)
-	median = np.median(values)
-	standardDeviation = np.std(values)
-
-	print('\nMean:\t\t\t', mean)
-	print('Median:\t\t\t', median)
-	print('Standard deviation:\t', standardDeviation, '\n')
-	
 	fig = plt.figure(figsize = (10, 5))
 
 	# creating the bar plot
